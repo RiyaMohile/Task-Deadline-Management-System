@@ -14,7 +14,7 @@ export default function UserLogin() {
 
   const handleLogin = async () => {
     try {
-      const res = await API.post("/auth/login", { email, password });
+      const res = await API.post("api/auth/login", { email, password });
 
       if (res.data.role !== "intern") {
         alert("Not a user account");

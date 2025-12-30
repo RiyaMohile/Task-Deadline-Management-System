@@ -25,7 +25,7 @@ app.use(
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("Backend is live 🚀");
+  res.send("Backend is live");
 });
 
 app.use("/api/auth", require("./routes/authRoutes"));
