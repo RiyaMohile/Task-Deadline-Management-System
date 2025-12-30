@@ -105,63 +105,74 @@ export default function AdminTaskManager() {
       <div className="flex-1 overflow-hidden">
         <div className="h-full overflow-y-auto pr-2">
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-            {tasks.map((task) => (
-              <div
-                key={task._id}
-                className="bg-white rounded-xl shadow p-5 hover:shadow-lg transition"
-              >
-                <h2 className="font-semibold text-lg mb-1">
-                  {task.title}
-                </h2>
+  {tasks.length === 0 ? (
+    <div className="col-span-full flex flex-col items-center justify-center text-gray-500 mt-20">
+      <p className="text-lg font-medium">No tasks found</p>
+      <p className="text-sm mt-1">
+        Click “Create Task” to add your first task
+      </p>
+    </div>
+  ) : (
+    tasks.map((task) => (
+      <div
+        key={task._id}
+        className="bg-white rounded-xl shadow p-5 hover:shadow-lg transition"
+      >
+        <h2 className="font-semibold text-lg mb-1">
+          {task.title}
+        </h2>
 
-                <p className="text-sm text-gray-600 mb-3 line-clamp-2">
-                  {task.description}
-                </p>
+        <p className="text-sm text-gray-600 mb-3 line-clamp-2">
+          {task.description}
+        </p>
 
-                <div className="flex flex-wrap gap-2 text-xs mb-4">
-                  <span className="px-2 py-1 rounded bg-blue-100 text-blue-700">
-                    {task.project.name}
-                  </span>
+        <div className="flex flex-wrap gap-2 text-xs mb-4">
+  <span className="px-2 py-1 rounded bg-blue-100 text-blue-700">
+    {task.project?.name || "No Project"}
+  </span>
 
-                  <span
-                    className={`px-2 py-1 rounded font-semibold
-                      ${task.priority === "High"
-                          ? "bg-red-100 text-red-700"
-                          : task.priority === "Medium"
-                          ? "bg-yellow-100 text-yellow-700"
-                          : "bg-green-100 text-green-700"
-                      }`}
-                  >
-                    {task.priority}
-                  </span>
+  <span
+    className={`px-2 py-1 rounded font-semibold
+      ${
+        task.priority === "High"
+          ? "bg-red-100 text-red-700"
+          : task.priority === "Medium"
+          ? "bg-yellow-100 text-yellow-700"
+          : "bg-green-100 text-green-700"
+      }`}
+  >
+    {task.priority}
+  </span>
 
-                  <span className="px-2 py-1 rounded bg-purple-100 text-purple-700">
-                    {task.assignedTo.name}
-                  </span>
-                </div>
+  <span className="px-2 py-1 rounded bg-purple-100 text-purple-700">
+    {task.assignedTo?.name || "Unassigned"}
+  </span>
+</div>
 
-                <p className="text-xs text-gray-500 mb-3">
-                  Deadline:{" "}
-                  {new Date(task.deadline).toLocaleDateString()}
-                </p>
 
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => handleEdit(task)}
-                    className="bg-yellow-500 text-white px-3 py-1 rounded"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleDelete(task._id)}
-                    className="bg-red-600 text-white px-3 py-1 rounded"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
+        <p className="text-xs text-gray-500 mb-3">
+          Deadline: {new Date(task.deadline).toLocaleDateString()}
+        </p>
+
+        <div className="flex gap-2">
+          <button
+            onClick={() => handleEdit(task)}
+            className="bg-yellow-500 text-white px-3 py-1 rounded"
+          >
+            Edit
+          </button>
+          <button
+            onClick={() => handleDelete(task._id)}
+            className="bg-red-600 text-white px-3 py-1 rounded"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    ))
+  )}
+</div>
+
         </div>
       </div>
 
